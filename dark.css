@@ -1,0 +1,45 @@
+#switch-color{
+    font-family: 'Times New Roman', Times, serif;
+    background-color: #ffffff;
+    opacity: 0.2;
+    color: #000000;
+    cursor: wait;
+    /*cursor defines the shape*/
+    font-size: 50%;
+    max-width: 320px;
+    
+    margin: 0 auto;
+    padding: 4px 0;
+    text-align: center;
+    
+}
+#switch-color:hover{
+    opacity: 1.0;
+}
+
+div{
+    display: block;
+    /*position: absolute;
+    margin: auto;
+    width:480px;
+    height: 10px;
+    top:0;right: 0;bottom:0;left: 0; */
+}
+
+p{
+    display: block;
+    text-align: center;
+    height: 20px;
+    margin: auto;
+    position: absolute;
+    top: 0; left: 0; bottom: 0; right: 0;
+}
+body{
+    background:#000000;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    font-size: 121%;
+    color: #ffffff;
+    margin:10px;
+    text-rendering: optimizeLegibility;
+    /*text-rendering is different in Geokr nad Webkit*/
+}

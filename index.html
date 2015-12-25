@@ -2,12 +2,62 @@
 <head>
     <meta charset="UTF-8">
     <title>PackWord</title>
-    <link rel="stylesheet" href="./switch.css">
+    <link id="main-css" rel="stylesheet" href="./light.css">
 </head>
 <body>
-    <p>Hello,zhe13</p>
-    <div id="switch-color" onclick="switch_color()">
+    <p id="hello">Hello,zhe13.<br>.</p><br>
+    
+    <div id="switch-color" onclick="switchColor()">
         <span>Go Dark.</span>
     </div>
+    <script>
+        // @12.25 by zhe13.
+        //      inline script to make a switch to change the theme.
+        //      innerHtml & textContent is differet.
+        var _gap = _gap || [];
+        var main_css,switch_text,time_text;
+        var styles = {
+            light:["Light","#fff","./light.css","./solarized-light.css","Go Dark"],
+            dark:["Dark","#000","./dark.css","./solarized-dark.css","Brighten"]
+        };
+        function setStyle(style){
+            var date = new Date();
+            _gap.push(["_setCustomVar",1,"Color",style[0],1]);
+            document.body.style.backgroundColor = style[1];
+            main_css.attributes.href.value = style[2];
+            switch_text.textContent = style[4];
+            // time_text.textContent += date.toLocaleDateString();
+            date.setTime(date.getTime() + 30*24*60*60*1000);
+            document.cookie = "main-css="+ main_css.attributes.href.value +";expires="+
+            date.toLocaleTimeString() +";path=/";
+            return style;
+        }
+        function switchColor(){
+            var style = main_css.attributes.href.value === "./light.css" ? setStyle(styles.dark):setStyle(styles.light);
+            _gap.push(["_trackEvent","color","set style",style[0]]);
+        }
+        
+        document.addEventListener("DOMContentLoaded",function(){
+            switch_text = document.getElementById("switch-color");
+            main_css = document.getElementById("main-css");
+            time_text = document.getElementById("hello");
+            // innerHTMl tells from textContent
+            time_text.innerHTML += new Date().toLocaleDateString();
+            if(window.location.hash.slice(1)==="dark"){
+                setStyle(styles.dark);
+                return;
+            }
+            if(window.location.hash.slice(1)=== "light"){
+                setStyle(styles.light);
+                return;
+            }
+            document.cookie.split(";").forEach(function(cookie){
+                cookie = cookie.split("=");
+                if(cookie[0] === "main-css" &&cookie[1]==="./dark.css"){
+                    setStyle(styles.dark);
+                }
+            });
+        })
+    </script>
 </body>
 </html>
