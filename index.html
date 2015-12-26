@@ -1,0 +1,37 @@
+<!--@12.25.2015 by zhe13.Take a try at canvas-->
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <title>CanvasPlayGround</title>
+</head>
+<body>
+    <div>
+        interval|how many pixels between two sampling<br>
+        width: <input type="text" id="pic_w" value="2"> <br>
+        height:<input type="text" id="pic_h"value="2"> <br>
+        words to fill: <input type="text" id="fill_word" value="zhe13"> <br>
+        scale rate: <input id="target-scall" type="text" value="1.0."> <br>
+        select shape
+        <select id="select-img">
+            <option value="./test1.jpg">test1</option>
+            <option value="./test2.jpg">test2</option>
+            <option value="./test3.jpg">test3</option>
+        </select>
+        <img src="" alt="" id="prev-img" height="100px">
+    </div>
+    
+    <div>
+        <canvas id="canvas"></canvas>
+    </div>
+    
+    <script type="text/javascript">
+        // CanvasRenderingContext2D
+        var canvas=document.getElementById('canvas');
+        var ctx=canvas.getContext('2d');
+        ctx.fillStyle='#FF0000';
+        // ctx.fillRect(0,0,280,100);
+        ctx.fillText("this",50,50);
+    </script>
+</body>
+</html>
