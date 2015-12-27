@@ -19,3 +19,12 @@ so,I want to first use rectangle and triangle shapes to test.And only use One wo
 * 2nd step:Still simple shapes,this time I will change the font size.
 * 3rd step:try more complex shapes.
 
+
+
+# Reference
+* [extends from](https://github.com/dushaobindoudou/image_fill_word.git)
+* [thanks to](https://github.com/wild-flame/Words_Filling)
+* [微博关键字](http://ued.ctrip.com/blog/pictures-twitter-keyword-generating-algorithm.html)
+* [Image Resize](http://www.jqueryscript.net/layout/jQuery-Plugin-for-Client-Side-Image-Resizing-canvasResize.html)
+* [RGB](http://www.blackglory.me/rgb-color-gradient-interpolation-principle-and-algorithm/)
+* [Py数字图像处理](http://blog.sina.com.cn/s/blog_4b5039210100f6ki.html)

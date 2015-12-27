@@ -4,34 +4,81 @@
 <head>
     <meta charset="UTF-8">
     <title>CanvasPlayGround</title>
+    <link rel="stylesheet" href="./">
 </head>
 <body>
-    <div>
+    <header><p>hello zhe13</p></header>
+    <div id="settings">
         interval|how many pixels between two sampling<br>
-        width: <input type="text" id="pic_w" value="2"> <br>
-        height:<input type="text" id="pic_h"value="2"> <br>
+        unit: <input type="text" id="scan_unit" value="2"> <br>
+        <!--height:<input type="text" id="pic_h"value="2"> <br>-->
         words to fill: <input type="text" id="fill_word" value="zhe13"> <br>
-        scale rate: <input id="target-scall" type="text" value="1.0."> <br>
+        scale rate: <input id="scale" type="text" value="1.0."> <br>
         select shape
-        <select id="select-img">
-            <option value="./test1.jpg">test1</option>
-            <option value="./test2.jpg">test2</option>
-            <option value="./test3.jpg">test3</option>
-        </select>
-        <img src="" alt="" id="prev-img" height="100px">
+        <select id="select_img">
+            <option value="./test1.png">test1</option>
+            <option value="./test2.png">test2</option>
+            <option value="./test3.png">test3</option>
+        </select><br>
+    </div>
+    
+    <div id="">
+       <input type="button" id="ensure" value="save setteings">
+       <input type="button" id="begin_scan"  value="start">
+       <p><span id="process"></span></p>
+    </div>
+    
+    <div id="">
+        <img src="" alt="" id="prev_img" height="100px" width="">
     </div>
     
     <div>
-        <canvas id="canvas"></canvas>
+        <canvas id="former"></canvas>
+    </div>
+    
+    <div>
+        <canvas id="latter"></canvas>
     </div>
     
     <script type="text/javascript">
         // CanvasRenderingContext2D
-        var canvas=document.getElementById('canvas');
+        var canvas=document.getElementById('former');
         var ctx=canvas.getContext('2d');
-        ctx.fillStyle='#FF0000';
+        
+        ctx.fillStyle='#000000';
         // ctx.fillRect(0,0,280,100);
-        ctx.fillText("this",50,50);
+        // ctx.fillText("FORMER",50,50);
+        // ctx.beginPath();
+        // ctx.moveTo(75,50);
+        // ctx.lineTo(100,75);
+        // ctx.lineTo(100,25);
+        // ctx.closePath();
+        // ctx.fill();
+        
+        ctx.beginPath();
+        ctx.arc(75,75,50,0,Math.PI*2,true); // 绘制
+        ctx.moveTo(110,75);
+        ctx.arc(75,75,35,0,Math.PI,false);   // 口(顺时针)
+        ctx.moveTo(65,65);
+        ctx.arc(60,65,5,0,Math.PI*2,true);  // 左眼
+        ctx.moveTo(95,65);
+        ctx.arc(90,65,5,0,Math.PI*2,true);  // 右眼
+        ctx.stroke();
+        console.log(ctx.measureText("we"));
+        
+        var cvs = document.getElementById("latter");
+        var ctx2= cvs.getContext("2d");
+        // Quadratric curves example
+        ctx2.beginPath();
+        ctx2.moveTo(75,40);
+        ctx2.bezierCurveTo(75,37,70,25,50,25);
+        ctx2.bezierCurveTo(20,25,20,62.5,20,62.5);
+        ctx2.bezierCurveTo(20,80,40,102,75,120);
+        ctx2.bezierCurveTo(110,102,130,80,130,62.5);
+        ctx2.bezierCurveTo(130,62.5,130,25,100,25);
+        ctx2.bezierCurveTo(85,25,75,37,75,40);
+        ctx2.fill()
     </script>
+    <script type="text/javascript" src="./fill.js"></script>
 </body>
 </html>
