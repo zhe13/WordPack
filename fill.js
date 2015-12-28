@@ -7,7 +7,7 @@ var colorblock =[{"r":255,"g":255,"b":255},{"r":224,"g":224,"b":224},{"r":192,"g
 
 var GLOBAL = {
     config:{
-        unit_size:{x:2,y:2},
+        unit_size:{w:2,h:2},
         fill_size:{w:3,h:3},
         fill_word:"zhe13",
         render_img:"./one.jpg"
@@ -68,7 +68,14 @@ function getBlackWhite(color){
 }
 
 
-function eachImageData(cvs,ctx,offset,callback,execover){
+function scanEachImageData(cvs,ctx,offset,callback,execover){
+    if(!cvs || !ctx || !ctx.getImageData){
+        console.log("imageData wrong");
+        return;
+    }
+    offset = offset || {x:0,y:0};
+    var img_data = ctx.getImageData(0,0,cvs.width,cvs.height);
+    
     
 }
 
@@ -84,9 +91,10 @@ function setMosaic(cvs,ctx){
     var new_cvs = document.getElementById("latter");
     var new_ctx = new_cvs.getContext("2d");
     
-    var draw_img_y =0;
+    var draw_img_y =0;//which line to render
     var index_line = 0;
     
+    // mix color with black to get average
     function getAverageColor(r,g,b,a){
         temp_color.r = (temp_color.r+r)/2;
         temp_color.g = (temp_color.g+g)/2;
@@ -94,18 +102,63 @@ function setMosaic(cvs,ctx){
         temp_color.a = (temp_color.a+a)/2;
     }
     
-    function restTempColor(){
+    // 
+    function resetTempColor(){
         temp_color={r:0,g:0,b:0,a:0};
     }
     
-    function fillText(ctx,color,info){
+    // it can be replaced with other picture.
+    function drawText(ctx,color,info){
+        // info contains infomation of place.
         var words = GLOBAL.config.fill_word;
         if(words.length<1){
             words = ".";
         }
         var index = index_line%words.length;
+        var cat_char = words[index];
+        ctx.fillStyle = "rgb("+color.r+","+color.g+","+color.b+")";
+        ctx.font    = "700 "+info.h+"px sans-serif";
+        ctx.fillText(cat_char,info.x,info.y);
         
     }
+    function drawUnit(ctx,color,info){}
+    
+    
+    
+    function drawLine(matrix,y,callback){
+        var line = matrix[y]
+        setTimeout(function() {
+            for(let x =0,len = line.length;x<len;x++){
+                index_line++;
+                drawText(new_ctx,line[x],{w:fill_size.w,h:fill_size.h,x:x*fill_size.w,y:y*fill_size.h});
+                // line contains color info.
+            }
+            callback && callback();
+        }, 1);
+    }
+    
+    function fillPicture(matrix,size){
+        if(draw_img_y > matrix.length-1){
+            //alert("complete.");
+            console.log("complete");
+            return;
+        }
+        drawLine(matrix,draw_img_y,function(){
+            fillPicture(matrix,size);
+            process.innerHTML = "Now Drawing:"+parseInt(draw_img_y/matrix.length*100)+"%";
+            
+        });
+        draw_img_y++;
+    }
+    
+    function prepareNewCanvas(){
+        let w = cvs.width;
+        let h = cvs.height;
+        new_ctx.width = w*fill_size.w/mosaic_size.w;
+        new_ctx.height= h*fill_size.h/mosaic_size.h;
+        new_ctx.clearRect(0,0,new_ctx.width,new_ctx.height);
+    }
+    
     
     
 }
@@ -140,21 +193,23 @@ function main(){
         var scan_unit  = document.getElementById("scan_unit");
         
         GLOBAL.config.fill_word = fill_word.nodeValue;
-        GLOBAL.config.fill_size = {"w":parseInt(scale_rate.nodeValue),"h":parseInt(scale_rate.nodeValue)};
-        GLOBAL.config.unit_size.x = parseInt(scan_unit.nodeValue);
-        GLOBAL.config.unit_size.y = parseInt(scan_unit.nodeValue);
+        
+        GLOBAL.config.unit_size.w = parseInt(scan_unit.nodeValue,10);
+        GLOBAL.config.unit_size.h = parseInt(scan_unit.nodeValue,10);
+    
+        GLOBAL.config.fill_size = {"w":parseInt(scale_rate.value*scan_unit.value,10),"h":parseInt(scale_rate.value*scan_unit.value,10)};
     }
     
     
     select_img.onchange = function(){
         prev_img.src = this.value;
         GLOBAL.config.render_img = this.value;
-    }
+    };
     
     begin_scan.onclick = function(){
         updateSettings();
         init(GLOBAL.config.render_img);
-    }
+    };
     
 }
 

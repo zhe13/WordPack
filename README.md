@@ -22,8 +22,9 @@ so,I want to first use rectangle and triangle shapes to test.And only use One wo
 
 
 # Reference
-* [extends from](https://github.com/dushaobindoudou/image_fill_word.git)
-* [thanks to](https://github.com/wild-flame/Words_Filling)
+* [extends from image_fill_word](https://github.com/dushaobindoudou/image_fill_word.git)
+* [thanks to Words_Filling](https://github.com/wild-flame/Words_Filling)
+* [thanks to legofy](https://github.com/Wildhoney/Legofy)
 * [微博关键字](http://ued.ctrip.com/blog/pictures-twitter-keyword-generating-algorithm.html)
 * [Image Resize](http://www.jqueryscript.net/layout/jQuery-Plugin-for-Client-Side-Image-Resizing-canvasResize.html)
 * [RGB](http://www.blackglory.me/rgb-color-gradient-interpolation-principle-and-algorithm/)
