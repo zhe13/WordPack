@@ -76,6 +76,10 @@ function scanEachImageData(cvs,ctx,offset,callback,execover){
     offset = offset || {x:1,y:1};
     var img_data = ctx.getImageData(0,0,cvs.width,cvs.height);
     var is_end = false;
+    var interval = null;
+    var current_y = -1;
+    var img_w = img_data.width;
+    var img_h = img_data.height;
     
     // traverse line i.
     function execLine(i,line_w,image_data,execCall){
@@ -91,7 +95,7 @@ function scanEachImageData(cvs,ctx,offset,callback,execover){
                  a : image_data.data[index+3]
             };
             
-            callback && callback(image_data.data,{},color_info);
+            callback && callback(image_data.data,{index:index,w:img_w,h:img_h},color_info);
         }
         execCall && execCall();
     }
@@ -106,6 +110,33 @@ function scanEachImageData(cvs,ctx,offset,callback,execover){
     // |.               .
     // vpw(h-1),...   ,pwh-1
     // **each p|n has 4 in the data[].so p|x,y->（wx+y)*4
+    
+    function nextLine(taskendCallback){
+       if(interval){
+           clearTimeout(interval);
+           interval = null;
+       } 
+       // call the func when finishing the last line of picture 
+       if(current_y >= img_h){
+           is_end = true;
+           taskendCallback && taskendCallback();
+           return;
+       }
+       current_y += offset.y;
+       interval = setTimeout(function(){
+           execLine(current_y,img_w,img_data,function(){
+               nextLine(taskendCallback);
+           });
+       },1);
+       //ctx.putImageData(img_data,0,0,0,0,img_data.width,img_data.height);
+       process.innerHTML = "now scanning:"+parseInt(current_y/img_h*100,10)+"%";
+    }
+    // execute the recursion
+    nextLine(function(){
+        ctx.putImageData(img_data,0,0,0,0,img_data.width,img_data.height);
+        console.log("scan complete");
+        execover && execover();
+    });
     
 }
 
@@ -167,14 +198,14 @@ function setMosaic(cvs,ctx){
         }, 1);
     }
     
-    function fillPicture(matrix,size){
+    function fillPicture(matrix){
         if(draw_img_y > matrix.length-1){
             //alert("complete.");
             console.log("complete");
             return;
         }
         drawLine(matrix,draw_img_y,function(){
-            fillPicture(matrix,size);
+            fillPicture(matrix);
             process.innerHTML = "Now Drawing:"+parseInt(draw_img_y/matrix.length*100)+"%";
             
         });
@@ -190,6 +221,19 @@ function setMosaic(cvs,ctx){
     }
     
     
+    var word_matrix = [];
+    var pic_line = [];
+    scanEachImageData(cvs,ctx,mosaic_size,function(img_data,info,color){
+        let _color = {
+            r:color.r,
+            g:color.g,
+            b:color.b
+        };
+        
+    },function(){
+        prepareNewCanvas();
+        fillPicture(word_matrix);
+    });
     
 }
 
