@@ -73,9 +73,39 @@ function scanEachImageData(cvs,ctx,offset,callback,execover){
         console.log("imageData wrong");
         return;
     }
-    offset = offset || {x:0,y:0};
+    offset = offset || {x:1,y:1};
     var img_data = ctx.getImageData(0,0,cvs.width,cvs.height);
+    var is_end = false;
     
+    // traverse line i.
+    function execLine(i,line_w,image_data,execCall){
+        if(is_end){
+            return;
+        }
+        for(let j =0;j<line_w;j+=offset.x){
+            var index = (i*line_w+j)*4;
+            var color_info={
+                 r : image_data.data[index],
+                 g : image_data.data[index+1],
+                 b : image_data.data[index+2],
+                 a : image_data.data[index+3]
+            };
+            
+            callback && callback(image_data.data,{},color_info);
+        }
+        execCall && execCall();
+    }
+    // @Illustration
+    // <-----------w-------->
+    // |p0,p1,...     ,pw-1       
+    // |pw,...        ,p2w-1
+    // |.               . 
+    // h.               .
+    // |.               .
+    // |.               .
+    // |.               .
+    // vpw(h-1),...   ,pwh-1
+    // **each p|n has 4 in the data[].so p|x,y->（wx+y)*4
     
 }
 
