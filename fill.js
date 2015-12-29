@@ -73,7 +73,8 @@ function scanEachImageData(cvs,ctx,offset,callback,execover){
         console.log("imageData wrong");
         return;
     }
-    offset = offset || {x:1,y:1};
+    offset = offset || {w:1,h:1};
+    console.log(offset)
     var img_data = ctx.getImageData(0,0,cvs.width,cvs.height);
     var is_end = false;
     var interval = null;
@@ -86,7 +87,7 @@ function scanEachImageData(cvs,ctx,offset,callback,execover){
         if(is_end){
             return;
         }
-        for(let j =0;j<line_w;j+=offset.x){
+        for(let j =0;j<line_w;j+=offset.w){
             var index = (i*line_w+j)*4;
             var color_info={
                  r : image_data.data[index],
@@ -122,13 +123,15 @@ function scanEachImageData(cvs,ctx,offset,callback,execover){
            taskendCallback && taskendCallback();
            return;
        }
-       current_y += offset.y;
+       
+       current_y += offset.h;
        interval = setTimeout(function(){
            execLine(current_y,img_w,img_data,function(){
                nextLine(taskendCallback);
            });
        },1);
-       //ctx.putImageData(img_data,0,0,0,0,img_data.width,img_data.height);
+       ctx.putImageData(img_data,0,0,0,0,img_data.width,img_data.height);
+       
        process.innerHTML = "now scanning:"+parseInt(current_y/img_h*100,10)+"%";
     }
     // execute the recursion
@@ -224,15 +227,37 @@ function setMosaic(cvs,ctx){
     var word_matrix = [];
     var pic_line = [];
     scanEachImageData(cvs,ctx,mosaic_size,function(img_data,info,color){
-        let _color = {
-            r:color.r,
-            g:color.g,
-            b:color.b
-        };
+        
+        let left_top_index = info.index;
+        let matrix_width   = info.w;
+        let matrix_height  = info.h;
+        
+        // in the sample rect|mosaic_size.w*h,scanEID provide the left_top point's infomation.
+        // this loop mix all the colors in the sampling rect(mosaic-size) with balck\cause we use the RGDa.
+        for(let r =0;r<mosaic_size.h;r++){
+            for(let c =0;c<mosaic_size.w;c++){
+                var sample_index = left_top_index+c*4+r*matrix_width*4;
+                getAverageColor(img_data[sample_index],img_data[sample_index+1],img_data[sample_index+2],img_data[sample_index+3]);
+            }
+        }
+        // then this loop assign the mixed temp_color 2 each unit in the mosaic.
+        for(let r =0;r<mosaic_size.h;r++){
+            for(let c =0;c<mosaic_size.w;c++){
+                var s_idx = left_top_index+c*4+r*matrix_width*4;
+                img_data[s_idx]  = temp_color.r;
+                img_data[s_idx+1]= temp_color.g;
+                img_data[s_idx+2]= temp_color.b;
+                img_data[s_idx+3]= temp_color.a;
+                
+            }
+        }
+        
+        resetTempColor();
+        //push the changing 
         
     },function(){
         prepareNewCanvas();
-        fillPicture(word_matrix);
+        //fillPicture(word_matrix);
     });
     
 }
@@ -266,11 +291,11 @@ function main(){
         var fill_word  = document.getElementById("fill_word");
         var scan_unit  = document.getElementById("scan_unit");
         
-        GLOBAL.config.fill_word = fill_word.nodeValue;
+        GLOBAL.config.fill_word = fill_word.value;
         
-        GLOBAL.config.unit_size.w = parseInt(scan_unit.nodeValue,10);
-        GLOBAL.config.unit_size.h = parseInt(scan_unit.nodeValue,10);
-    
+        GLOBAL.config.unit_size.w = parseInt(scan_unit.value,10);
+        GLOBAL.config.unit_size.h = parseInt(scan_unit.value,10);
+        
         GLOBAL.config.fill_size = {"w":parseInt(scale_rate.value*scan_unit.value,10),"h":parseInt(scale_rate.value*scan_unit.value,10)};
     }
     
