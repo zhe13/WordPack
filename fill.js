@@ -1,5 +1,9 @@
 // @12.26.2015 by zhe13
 //      try to fill the picture follow the image_fill_word from
+// @1.7.2016 by zhe13
+//      someting wrong in matrix for drawing.
+//      problems:1,currentY = -1,and add itself everytime, can not scan the first line
+// 
 "use strict"
 
 //the color units for sampling
@@ -95,7 +99,7 @@ function scanEachImageData(cvs,ctx,offset,callback,execover){
                  b : image_data.data[index+2],
                  a : image_data.data[index+3]
             };
-            
+            // debugger;
             callback && callback(image_data.data,{index:index,w:img_w,h:img_h},color_info);
         }
         execCall && execCall();
@@ -198,7 +202,7 @@ function setMosaic(cvs,ctx){
                 // line contains color info.
             }
             callback && callback();
-        }, 1);
+        }, 0);
     }
     
     function fillPicture(matrix){
@@ -209,27 +213,32 @@ function setMosaic(cvs,ctx){
         }
         drawLine(matrix,draw_img_y,function(){
             fillPicture(matrix);
-            process.innerHTML = "Now Drawing:"+parseInt(draw_img_y/matrix.length*100)+"%";
+            process.innerHTML = "Now Drawing:"+parseInt(draw_img_y/matrix.length*100,10)+"%";
             
         });
         draw_img_y++;
+        // console.log("下一行",draw_img_y);
     }
     
     function prepareNewCanvas(){
         let w = cvs.width;
         let h = cvs.height;
-        new_ctx.width = w*fill_size.w/mosaic_size.w;
-        new_ctx.height= h*fill_size.h/mosaic_size.h;
-        new_ctx.clearRect(0,0,new_ctx.width,new_ctx.height);
+        let nw = w*fill_size.w/mosaic_size.w;
+        let nh= h*fill_size.h/mosaic_size.h;
+        new_cvs.width = nw;
+        new_cvs.height= nh;
+        console.log(new_ctx);
+        new_ctx.clearRect(0,0,nw,nh);
     }
     
     
     var word_matrix = [];
     var pic_line = [];
+    var line_mark = 0;
     scanEachImageData(cvs,ctx,mosaic_size,function(img_data,info,color){
         
         let left_top_index = info.index;
-        let matrix_width   = info.w;
+        let matrix_width   = info.w;//图片矩阵
         let matrix_height  = info.h;
         
         // in the sample rect|mosaic_size.w*h,scanEID provide the left_top point's infomation.
@@ -252,19 +261,32 @@ function setMosaic(cvs,ctx){
             }
         }
         
-        resetTempColor();
-        //push the changing 
         
+        //push the changing imgdata into a matrix for drawing--wrong
+        // use the img data to make a matrix based on unit.
+        // console.log('mark1',left_top_index,matrix_width,line_mark);
+        // the top_left_index is the index in imgdata,every pixel contains 4 data.
+        if(parseInt(left_top_index/matrix_width,10)===line_mark){
+            pic_line.push(temp_color);
+        }else{
+            word_matrix.push(pic_line);
+            pic_line = [];
+            line_mark = parseInt(left_top_index/matrix_width,10);
+             pic_line.push(temp_color);
+        }
+        
+        resetTempColor();
     },function(){
         prepareNewCanvas();
-        //fillPicture(word_matrix);
+        console.log(word_matrix,"matrix");
+        fillPicture(word_matrix);
     });
     
 }
 
 function init(image_name){
     var cvs = document.getElementById("former");
-    // var img_src = image_name;
+
     var ctx = cvs.getContext("2d");
     var img = new Image();
     img.src = image_name;

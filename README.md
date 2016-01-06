@@ -10,6 +10,17 @@ and yours,just wait a minute,it comes up.the two names consist of the shape.
 # How it works.
 It seems to be a tough mission for me,cause I am not good at problem-solving.So I keep note about
 my ideas int the following.
+***
+＠2016.1.5
+＠example
+var imgData=context.getImageData(x,y,width,height);
+
+
+```flow
+st=>start:main()
+e=>end:
+```
+
 
 # Tahnks for theJian & zzm 's suggestion.
 # Tracks
