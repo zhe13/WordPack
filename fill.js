@@ -3,7 +3,7 @@
 // @1.7.2016 by zhe13
 //      someting wrong in matrix for drawing.
 //      problems:1,currentY = -1,and add itself everytime, can not scan the first line
-// 
+//      problems:2,scan unit 会影响成像，使得图像纵向拉伸，～～暂未找到错误。～～会多出几行
 "use strict"
 
 //the color units for sampling
@@ -197,9 +197,10 @@ function setMosaic(cvs,ctx){
         var line = matrix[y]
         setTimeout(function() {
             for(let x =0,len = line.length;x<len;x++){
-                index_line++;
+                
                 drawText(new_ctx,line[x],{w:fill_size.w,h:fill_size.h,x:x*fill_size.w,y:y*fill_size.h});
                 // line contains color info.
+                index_line++;
             }
             callback && callback();
         }, 0);
@@ -225,8 +226,8 @@ function setMosaic(cvs,ctx){
         let h = cvs.height;
         let nw = w*fill_size.w/mosaic_size.w;
         let nh= h*fill_size.h/mosaic_size.h;
-        new_cvs.width = nw;
-        new_cvs.height= nh;
+        new_cvs.width = nw*1.5;
+        new_cvs.height= nh*1.5;
         console.log(new_ctx);
         new_ctx.clearRect(0,0,nw,nh);
     }
@@ -239,7 +240,7 @@ function setMosaic(cvs,ctx){
         
         let left_top_index = info.index;
         let matrix_width   = info.w;//图片矩阵
-        let matrix_height  = info.h;
+        
         
         // in the sample rect|mosaic_size.w*h,scanEID provide the left_top point's infomation.
         // this loop mix all the colors in the sampling rect(mosaic-size) with balck\cause we use the RGDa.
@@ -266,15 +267,17 @@ function setMosaic(cvs,ctx){
         // use the img data to make a matrix based on unit.
         // console.log('mark1',left_top_index,matrix_width,line_mark);
         // the top_left_index is the index in imgdata,every pixel contains 4 data.
-        if(parseInt(left_top_index/matrix_width,10)===line_mark){
-            pic_line.push(temp_color);
+        if(parseInt(left_top_index/(matrix_width*4),10)===line_mark){
+            pic_line.push(color);
         }else{
             word_matrix.push(pic_line);
             pic_line = [];
-            line_mark = parseInt(left_top_index/matrix_width,10);
-             pic_line.push(temp_color);
+            // line_mark ++; pay attetion to this,the matrix of text is based on unit,so
+            // we can not ++ here.Add Unit_size is the right way
+            line_mark = left_top_index/(matrix_width*4);
+             pic_line.push(color);
         }
-        
+        console.log(left_top_index,matrix_width,line_mark);
         resetTempColor();
     },function(){
         prepareNewCanvas();
