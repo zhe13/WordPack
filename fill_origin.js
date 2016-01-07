@@ -4,14 +4,7 @@
 //      someting wrong in matrix for drawing.
 //      problems:1,currentY = -1,and add itself everytime, can not scan the first line
 //      problems:2,scan unit 会影响成像，使得图像纵向拉伸，～～暂未找到错误。～～会多出几行
-<<<<<<< HEAD
-'use strict'
-=======
-// 
-// @1.7.2016 by zhe13
-// binarize the picture.
 "use strict"
->>>>>>> 02a7504096e2e82be3e8822f109aa3ba05e7161a
 
 //the color units for sampling
 var colorblock =[{"r":255,"g":255,"b":255},{"r":224,"g":224,"b":224},{"r":192,"g":192,"b":192},{"r":160,"g":160,"b":160},{"r":128,"g":128,"b":128},{"r":96,"g":96,"b":96},{"r":64,"g":64,"b":64},{"r":32,"g":32,"b":32},{"r":0,"g":0,"b":0},{"r":255,"g":204,"b":229},{"r":255,"g":153,"b":204},{"r":255,"g":102,"b":178},{"r":255,"g":51,"b":153},{"r":255,"g":0,"b":127},{"r":204,"g":0,"b":102},{"r":153,"g":0,"b":76},{"r":102,"g":0,"b":51},{"r":51,"g":0,"b":25},{"r":255,"g":204,"b":204},{"r":255,"g":153,"b":255},{"r":255,"g":102,"b":255},{"r":255,"g":51,"b":255},{"r":255,"g":0,"b":255},{"r":204,"g":0,"b":204},{"r":153,"g":0,"b":153},{"r":102,"g":0,"b":102},{"r":51,"g":0,"b":51},{"r":229,"g":204,"b":255},{"r":204,"g":153,"b":255},{"r":178,"g":102,"b":255},{"r":153,"g":51,"b":255},{"r":127,"g":0,"b":255},{"r":102,"g":0,"b":204},{"r":76,"g":0,"b":153},{"r":51,"g":0,"b":102},{"r":25,"g":0,"b":51},{"r":204,"g":204,"b":255},{"r":153,"g":153,"b":255},{"r":102,"g":102,"b":255},{"r":51,"g":51,"b":255},{"r":0,"g":0,"b":255},{"r":0,"g":0,"b":204},{"r":0,"g":0,"b":153},{"r":0,"g":0,"b":102},{"r":0,"g":0,"b":51},{"r":204,"g":229,"b":255},{"r":153,"g":204,"b":255},{"r":102,"g":178,"b":255},{"r":51,"g":153,"b":255},{"r":0,"g":128,"b":255},{"r":0,"g":102,"b":204},{"r":0,"g":76,"b":153},{"r":0,"g":51,"b":102},{"r":0,"g":25,"b":51},{"r":204,"g":255,"b":255},{"r":153,"g":255,"b":255},{"r":102,"g":255,"b":255},{"r":51,"g":255,"b":255},{"r":0,"g":255,"b":255},{"r":0,"g":204,"b":204},{"r":0,"g":153,"b":153},{"r":0,"g":102,"b":102},{"r":0,"g":51,"b":51},{"r":204,"g":255,"b":229},{"r":153,"g":255,"b":204},{"r":102,"g":255,"b":178},{"r":51,"g":255,"b":153},{"r":0,"g":255,"b":128},{"r":0,"g":204,"b":102},{"r":0,"g":153,"b":76},{"r":0,"g":102,"b":51},{"r":0,"g":51,"b":25},{"r":204,"g":255,"b":204},{"r":153,"g":255,"b":153},{"r":102,"g":255,"b":102},{"r":51,"g":255,"b":51},{"r":0,"g":255,"b":0},{"r":0,"g":204,"b":0},{"r":0,"g":153,"b":0},{"r":0,"g":102,"b":0},{"r":0,"g":51,"b":0},{"r":229,"g":255,"b":204},{"r":204,"g":255,"b":153},{"r":178,"g":255,"b":102},{"r":153,"g":255,"b":51},{"r":128,"g":255,"b":0},{"r":102,"g":204,"b":0},{"r":76,"g":153,"b":0},{"r":51,"g":102,"b":0},{"r":25,"g":51,"b":0},{"r":255,"g":255,"b":204},{"r":255,"g":255,"b":153},{"r":255,"g":255,"b":102},{"r":255,"g":255,"b":51},{"r":255,"g":255,"b":0},{"r":204,"g":204,"b":0},{"r":153,"g":153,"b":0},{"r":102,"g":102,"b":0},{"r":51,"g":51,"b":0},{"r":255,"g":229,"b":204},{"r":255,"g":204,"b":153},{"r":255,"g":178,"b":102},{"r":255,"g":153,"b":51},{"r":255,"g":128,"b":0},{"r":204,"g":102,"b":0},{"r":153,"g":76,"b":0},{"r":102,"g":51,"b":0},{"r":51,"g":25,"b":0},{"r":255,"g":204,"b":204},{"r":255,"g":153,"b":153},{"r":255,"g":102,"b":102},{"r":255,"g":51,"b":51},{"r":255,"g":0,"b":0},{"r":204,"g":0,"b":0},{"r":153,"g":0,"b":0},{"r":102,"g":0,"b":0},{"r":51,"g":0,"b":0}];
@@ -21,8 +14,7 @@ var GLOBAL = {
         unit_size:{w:2,h:2},
         fill_size:{w:3,h:3},
         fill_word:"zhe13",
-        render_img:"./one.jpg",
-        binarization:false
+        render_img:"./one.jpg"
     }
 }
 
@@ -61,7 +53,7 @@ function getBlackWhite(color){
     for(let x in colorblock){
         temp_color = colorblock[x];
         temp_delta = Math.pow((color.r-temp_color.r),2)+Math.pow((color.g-temp_color.g),2)+Math.pow((color.b-temp_color.b),2);
-        if(x==0){//pay attention to the difference between == & ===
+        if(x===0){
             color_index = x;
             delta = temp_delta;
             continue;
@@ -70,14 +62,11 @@ function getBlackWhite(color){
             delta = temp_delta;
             color_index = x;
         }
-    
     }
-    
-    if(parseInt(color_index,10)<colorblock.length/3){
+    if(color_index<colorblock.length/2){
         res_color = {"r":255,"g":255,"b":255};
     }else{
         res_color = {"r":0,"g":0,"b":0};
-        console.log("HI,zhe13");
     }
     return res_color;
 }
@@ -261,21 +250,13 @@ function setMosaic(cvs,ctx){
                 getAverageColor(img_data[sample_index],img_data[sample_index+1],img_data[sample_index+2],img_data[sample_index+3]);
             }
         }
-        // binarize the average color
-        if(GLOBAL.config.binarization){
-            var bicolor = getBlackWhite(temp_color);
-        }else{
-            var bicolor = temp_color;
-        }
-        
-        
         // then this loop assign the mixed temp_color 2 each unit in the mosaic.
         for(let r =0;r<mosaic_size.h;r++){
             for(let c =0;c<mosaic_size.w;c++){
                 var s_idx = left_top_index+c*4+r*matrix_width*4;
-                img_data[s_idx]  = bicolor.r;
-                img_data[s_idx+1]= bicolor.g;
-                img_data[s_idx+2]= bicolor.b;
+                img_data[s_idx]  = temp_color.r;
+                img_data[s_idx+1]= temp_color.g;
+                img_data[s_idx+2]= temp_color.b;
                 img_data[s_idx+3]= temp_color.a;
                 
             }
@@ -296,7 +277,7 @@ function setMosaic(cvs,ctx){
             line_mark = left_top_index/(matrix_width*4);
              pic_line.push(color);
         }
-        // console.log(left_top_index,matrix_width,line_mark);
+        console.log(left_top_index,matrix_width,line_mark);
         resetTempColor();
     },function(){
         prepareNewCanvas();
@@ -329,7 +310,6 @@ function main(){
     var select_img = document.getElementById("select_img");
     var prev_img   = document.getElementById("prev_img");
     var begin_scan = document.getElementById("begin_scan");
-    var binarize   = document.getElementById("binarize");
     
     function updateSettings(){
         var scale_rate = document.getElementById("scale");
@@ -354,17 +334,6 @@ function main(){
         updateSettings();
         init(GLOBAL.config.render_img);
     };
-    
-    binarize.onclick = function(){
-        if(binarize.value == "binarize-on"){
-            binarize.value = "binarize-off";
-            GLOBAL.config.binarization = false;
-        }
-        else{
-            binarize.value = "binarize-on";
-            GLOBAL.config.binarization = true;
-        }
-    }
     
 }
 
