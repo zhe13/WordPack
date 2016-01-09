@@ -4,9 +4,13 @@
 //      someting wrong in matrix for drawing.
 //      problems:1,currentY = -1,and add itself everytime, can not scan the first line
 //      problems:2,scan unit 会影响成像，使得图像纵向拉伸，～～暂未找到错误。～～会多出几行
-
 // @1.7.2016 by zhe13
-// binarize the picture.
+//      binarize the picture.
+
+// @1.8.2016 by zhe13
+//      remember to fix problem tomorrow:第一行没有办法扫描
+//    
+
 "use strict"
 
 
@@ -234,8 +238,8 @@ function setMosaic(cvs,ctx){
         let h = cvs.height;
         let nw = w*fill_size.w/mosaic_size.w;
         let nh= h*fill_size.h/mosaic_size.h;
-        new_cvs.width = nw*1.5;
-        new_cvs.height= nh*1.5;
+        new_cvs.width = nw*1.01;
+        new_cvs.height= nh*1.01;
         console.log(new_ctx);
         new_ctx.clearRect(0,0,nw,nh);
     }

@@ -4,11 +4,12 @@
 <head>
     <meta charset="UTF-8">
     <title>WordPack</title>
-    <link rel="stylesheet" href="./">
+    <link id="muti-style" rel="stylesheet" href="./css/dark.css">
 </head>
 <body>
     <header><p>hello zhe13</p></header>
     <div id="settings">
+
         interval|how many pixels between two sampling<br>
         unit: <input type="text" id="scan_unit" value="2"> <br>
         <!--height:<input type="text" id="pic_h"value="2"> <br>-->
@@ -22,7 +23,7 @@
         </select><br>
     </div>
     
-    <div id="">
+    <div id="button">
        <input type="button" id="ensure" value="save setteings">
        <input type="button" id="begin_scan"  value="start">
        <input type="button" id="binarize" value="binarize-on"/>
@@ -81,6 +82,6 @@
         ctx2.fill()
     </script>
     <script type="text/javascript" src="./fill.js"></script>
-    
+    <script type="text/javascript" src="./js/addsrc.js"></script>
 </body>
 </html>

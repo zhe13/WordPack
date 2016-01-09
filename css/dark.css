@@ -1,0 +1,50 @@
+/*create by zhe13 @2016.1.9 import font from google*/
+@import url(https://fonts.googleapis.com/css?family=Indie+Flower);
+body{
+    background: #000000;
+    font-family: 'Indie Flower', cursive;
+    font-size: 189%;
+    font-weight: lighter;
+    color: #ffffff;
+    margin: 10px ;
+    text-rendering: optimizeLegibility;
+    text-align:center
+}
+header{
+    font-size: 520%;
+}
+p{
+    /*font-size:520%;*/
+    margin-bottom: 10px;
+}
+div{
+   margin: 0 auto;
+}
+input{
+    background: black;
+    color: whitesmoke;
+    border-width: 1px;
+    border-color: #8b8b8b;
+}
+select{
+    background: black;
+    color: white;
+    border-color: whitesmoke;
+}
+#button input{
+    width: 100px;
+    line-height: 24px;
+    font-size: initial;
+    font-weight: bolder;font-family:'Indie Flower', cursive;
+    text-shadow: 1px 1px 1px #333;
+    border: 2px solid #333;
+    border-radius: 7px;
+    box-shadow: 1px 1px 2px #8b8b8b inset;
+    position: relative;
+    overflow: hidden;
+}
+#button input:hover{
+    background: -webkit-linear-gradient(#818181, #575757);
+    background: -o-linear-gradient(#818181, #575757);
+    background: linear-gradient(#818181, #575757);
+}
