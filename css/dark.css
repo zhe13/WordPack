@@ -139,14 +139,22 @@ footer{
     position: fixed;
     bottom: 13px;
     z-index: 999;
+    height: 70px;
+    width: 500px;
+    left: 0px;
+    right: 0px;
+    margin: auto;
 }
 footer ul{list-style:none;}
+footer li{
+    display: inline;
+}
 footer a{
     color: white;
     text-decoration: none;
    
     font-weight: 700;
     margin: 0;
-    font-size: 1.05em;
+    font-size: 0.63em;
 }
 /*  footer end   */

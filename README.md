@@ -40,3 +40,8 @@ so,I want to first use rectangle and triangle shapes to test.And only use One wo
 * [Image Resize](http://www.jqueryscript.net/layout/jQuery-Plugin-for-Client-Side-Image-Resizing-canvasResize.html)
 * [RGB](http://www.blackglory.me/rgb-color-gradient-interpolation-principle-and-algorithm/)
 * [Py数字图像处理](http://blog.sina.com.cn/s/blog_4b5039210100f6ki.html)
+
+# Other Reference
+* [CSS bulb]()
+* [濒临灭绝的动物](http://www.webhek.com/misc-res/species-in-pieces/#)
+* [Sound Manager]()
