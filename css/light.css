@@ -1,14 +1,15 @@
 /*copy from dark,color is opposite*/
 @import url(https://fonts.googleapis.com/css?family=Indie+Flower);
 body{
-    background: #000000;
+    background: #FFFFFF;
     font-family: 'Indie Flower', cursive;
     font-size: 189%;
     font-weight: lighter;
-    color: #ffffff;
+    color: #202020;
     margin: 10px ;
     text-rendering: optimizeLegibility;
-    text-align:center
+    text-align:center;
+    overflow-x:hidden;
 }
 header{
     font-size: 520%;
@@ -22,10 +23,10 @@ div{
    margin: 0 auto;
 }
 input,select{
-    background: black;
-    color: whitesmoke;
-    border-width: 1px;
-    border-color: #8b8b8b;
+    background: white;
+    color:#484848;
+    border-width: 2px;
+    border-color: #787878;
 }
 
 canvas{
@@ -53,10 +54,10 @@ body::after{
     font-weight: bolder;
     position: absolute;
     display: inline-block;
-    content: "STAR Me";
-    top: 20px;
-    left: -20px;
-    color: #8b8b8b;
+    content: "Light";
+    top: 13px;
+    left: 13px;
+    color: #888888;
     opacity: 1;
     text-shadow: none;
     line-height: 28px;
@@ -67,10 +68,10 @@ body::after{
 }
 
 #button input:hover{
-    background: -webkit-linear-gradient(#818181, #575757);
-    background: -o-linear-gradient(#818181, #575757);
-    background: linear-gradient(#818181, #575757);
-    cursor: progress;
+    background: -webkit-linear-gradient(#f0f0f0, #c0c0c0);
+    background: -o-linear-gradient(#f0f0f0, #c0c0c0);
+    background: linear-gradient(#f0f0f0, #c0c0c0);
+    cursor: pointer;
 }
 
 
@@ -85,25 +86,25 @@ body::after{
 }
 
 /*svg*/
-.bulb #s-bulb {
+.bulb:hover #s-bulb {
   stroke: #262832;
   fill: #262832;
   transition: 1500ms;
 }
 
-.bulb:hover #s-bulb {
+.bulb #s-bulb {
   fill: #c4d8d9;
   stroke: #c4d8d9;
   stroke-width: 1;
   transition: 100ms;
 }
-.bulb #www-filament {
+.bulb:hover #www-filament {
   fill: #333542;
   stroke: #333542;
   transition: 1500ms;
 }
 
-.bulb:hover #www-filament {
+.bulb #www-filament {
   stroke: #ffdf43; 
   stroke-width: 2;
   /*fill: #ffdf43;*/
@@ -111,24 +112,24 @@ body::after{
 }
 
 .bulb+.light{
-    width: 0px;
-    height: 0px;
+    width: 70px;
+    height: 70px;
     border-radius: 50%;
     display: block;
-    opacity: 0;
+    opacity: 0.6;
     position: fixed;
     top: 0px;
     bottom: 34px;
     margin: auto;
-    transform: translateX(50%);
+    transform: translateX(0%);
     transition: all 800ms cubic-bezier(0.68, -0.55, 0.265, 1.55);
     background: radial-gradient(rgba(255, 223, 67, 0.8), rgba(255, 223, 56, 0));
 }
 .bulb:hover+.light{
-    width: 70px;
-    height: 70px;
-    opacity: 0.4;
-    transform: translateX(0);
+    width: 0px;
+    height: 0px;
+    opacity: 0;
+    transform: translateX(50%);
 }
 /*bulb END*/
 
@@ -150,7 +151,7 @@ footer li{
     display: inline;
 }
 footer a{
-    color: white;
+    color: #404040;
     text-decoration: none;
    
     font-weight: 700;
