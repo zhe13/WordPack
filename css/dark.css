@@ -8,7 +8,8 @@ body{
     color: #ffffff;
     margin: 10px ;
     text-rendering: optimizeLegibility;
-    text-align:center
+    text-align:center;
+    overflow-x:hidden;
 }
 header{
     font-size: 520%;
@@ -54,9 +55,9 @@ body::after{
     font-weight: bolder;
     position: absolute;
     display: inline-block;
-    content: "STAR Me";
+    content: "Dark";
     top: 20px;
-    left: -20px;
+    left: 13px;
     color: #8b8b8b;
     opacity: 1;
     text-shadow: none;
@@ -162,30 +163,3 @@ footer a{
 
 
 
-/*  github fork button right   */
-.github-fork{
-    position: absolute;
-    top: 41px;
-    padding: 2px 2px;
-    right: -41px;
-    background-color: #6c9548;
-    transform: rotate(45deg);
-    font-size: 18px;
-    background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.18));
-    pointer-events: auto;
-}
-
-.github-fork a{
-    text-decoration: blink;
-    text-shadow: 0 -2px rgba(0, 0, 0, 0.3);
-    color: whitesmoke;
-    border-style: dotted;
-    border-width: thin;
-    padding: 0 22px;
-
-}
-.github-fork a:hover{
-    text-shadow: 0 -2px rgba(0, 0, 0, 0.8);
-}
-
-/* fork end*/
