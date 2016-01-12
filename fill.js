@@ -9,8 +9,9 @@
 
 // @1.8.2016 by zhe13
 //      remember to fix problem tomorrow:第一行没有办法扫描
-//    
-
+// ＠1.12.2016 by zhe13 
+//      fix the loop problem above
+//      use data from toDataURL() to assign to a.download 
 "use strict"
 
 
@@ -94,7 +95,7 @@ function scanEachImageData(cvs,ctx,offset,callback,execover){
     var img_data = ctx.getImageData(0,0,cvs.width,cvs.height);
     var is_end = false;
     var interval = null;
-    var current_y = -1;
+    var current_y = 0;
     var img_w = img_data.width;
     var img_h = img_data.height;
     
@@ -140,9 +141,11 @@ function scanEachImageData(cvs,ctx,offset,callback,execover){
            return;
        }
        
-       current_y += offset.h;
+       
+    //   current_y += offset.h;
        interval = setTimeout(function(){
            execLine(current_y,img_w,img_data,function(){
+               current_y += offset.h;
                nextLine(taskendCallback);
            });
        },1);
@@ -220,7 +223,9 @@ function setMosaic(cvs,ctx){
     
     function fillPicture(matrix){
         if(draw_img_y > matrix.length-1){
-            //alert("complete.");
+            
+            var download_data = new_cvs.toDataURL('image/png',1);
+            document.getElementById("pic2").attributes.href.value = download_data;
             console.log("complete");
             return;
         }
@@ -301,7 +306,7 @@ function setMosaic(cvs,ctx){
         resetTempColor();
     },function(){
         prepareNewCanvas();
-        console.log(word_matrix,"matrix");
+        //console.log(word_matrix,"matrix");
         fillPicture(word_matrix);
     });
     
