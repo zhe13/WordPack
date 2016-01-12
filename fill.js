@@ -9,7 +9,8 @@
 
 // @1.8.2016 by zhe13
 //      remember to fix problem tomorrow:第一行没有办法扫描
-//    
+// @1.11.2016 byzhe13
+//      Safari can not receive let.Adjust for Safari
 
 "use strict"
 
@@ -36,7 +37,7 @@ function getNearstColor(color) {
     var temp_color = null;
     var temp = 0;
     var tempv= 0;
-    for(let x in colorblock){
+    for(var x in colorblock){
         temp_color = colorblock;
         tempv = Math.pow((color.r-temp_color.r),2)+Math.pow((color.g-temp_color.g),2)+Math.pow((color.b-temp_color.b),2);
         if(x===0){
@@ -59,7 +60,7 @@ function getBlackWhite(color){
     var delta = 0;
     var temp_delta = 0;
     var color_index =0;
-    for(let x in colorblock){
+    for(var x in colorblock){
         temp_color = colorblock[x];
         temp_delta = Math.pow((color.r-temp_color.r),2)+Math.pow((color.g-temp_color.g),2)+Math.pow((color.b-temp_color.b),2);
         if(x==0){//pay attention to the difference between == & ===
@@ -103,7 +104,7 @@ function scanEachImageData(cvs,ctx,offset,callback,execover){
         if(is_end){
             return;
         }
-        for(let j =0;j<line_w;j+=offset.w){
+        for(var j =0;j<line_w;j+=offset.w){
             var index = (i*line_w+j)*4;
             var color_info={
                  r : image_data.data[index],
@@ -208,7 +209,7 @@ function setMosaic(cvs,ctx){
     function drawLine(matrix,y,callback){
         var line = matrix[y]
         setTimeout(function() {
-            for(let x =0,len = line.length;x<len;x++){
+            for(var x =0,len = line.length;x<len;x++){
                 
                 drawText(new_ctx,line[x],{w:fill_size.w,h:fill_size.h,x:x*fill_size.w,y:y*fill_size.h});
                 // line contains color info.
@@ -234,10 +235,10 @@ function setMosaic(cvs,ctx){
     }
     
     function prepareNewCanvas(){
-        let w = cvs.width;
-        let h = cvs.height;
-        let nw = w*fill_size.w/mosaic_size.w;
-        let nh= h*fill_size.h/mosaic_size.h;
+        var w = cvs.width;
+        var h = cvs.height;
+        var nw = w*fill_size.w/mosaic_size.w;
+        var nh= h*fill_size.h/mosaic_size.h;
         new_cvs.width = nw*1.01;
         new_cvs.height= nh*1.01;
         console.log(new_ctx);
@@ -250,14 +251,14 @@ function setMosaic(cvs,ctx){
     var line_mark = 0;
     scanEachImageData(cvs,ctx,mosaic_size,function(img_data,info,color){
         
-        let left_top_index = info.index;
-        let matrix_width   = info.w;//图片矩阵
+        var left_top_index = info.index;
+        var matrix_width   = info.w;//图片矩阵
         
         
         // in the sample rect|mosaic_size.w*h,scanEID provide the left_top point's infomation.
         // this loop mix all the colors in the sampling rect(mosaic-size) with balck\cause we use the RGDa.
-        for(let r =0;r<mosaic_size.h;r++){
-            for(let c =0;c<mosaic_size.w;c++){
+        for(var r =0;r<mosaic_size.h;r++){
+            for(var c =0;c<mosaic_size.w;c++){
                 var sample_index = left_top_index+c*4+r*matrix_width*4;
                 getAverageColor(img_data[sample_index],img_data[sample_index+1],img_data[sample_index+2],img_data[sample_index+3]);
             }
@@ -271,8 +272,8 @@ function setMosaic(cvs,ctx){
         
         
         // then this loop assign the mixed temp_color 2 each unit in the mosaic.
-        for(let r =0;r<mosaic_size.h;r++){
-            for(let c =0;c<mosaic_size.w;c++){
+        for(var r =0;r<mosaic_size.h;r++){
+            for(var c =0;c<mosaic_size.w;c++){
                 var s_idx = left_top_index+c*4+r*matrix_width*4;
                 img_data[s_idx]  = bicolor.r;
                 img_data[s_idx+1]= bicolor.g;
@@ -314,8 +315,8 @@ function init(image_name){
     var img = new Image();
     img.src = image_name;
     img.onload = function(data){
-        let w = img.width;
-        let h = img.height;
+        var w = img.width;
+        var h = img.height;
         cvs.width = w;
         cvs.height = h;
         ctx.drawImage(img,0,0);
