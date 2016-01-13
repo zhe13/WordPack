@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Upload Your File</title>
+</head>
+<body>
+    <input type="file" id="upload">
+    <!--to ensure muti files,add the mutiple attribute-->
+    <script>
+        var upload = document.getElementById("upload");
+        
+        // upload.onchange = function(){
+        //     console.log("show file",file);
+        // }
+        upload.addEventListener("change",handleFiles,false);
+        function handleFiles(){
+            var file = this.files;
+            console.log("show file",file);
+        }
+    </script>
+</body>
+</html>
