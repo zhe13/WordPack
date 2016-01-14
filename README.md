@@ -24,14 +24,19 @@ draw a lego.
 
 
 
-# Tahnks for theJian & zzm 's suggestion.
-# Tracks
-* 0:no idea about that,make a button for fun when thinking about it.
-* 1st step:after talking this idea with theJian,we think it just need enumeration to finish this idea.
-so,I want to first use rectangle and triangle shapes to test.And only use One word in same font-size to fill them.
-* 2nd step:Still simple shapes,this time I will change the font size.
-* 3rd step:try more complex shapes.
+# Thanks for theJian & zzm 's suggestion.
 
+# Tracks
+* version 0.1:setMosaic & fillPixel function finished.Based on getImgData.
+* version 0.2:basic dark & light css added.some bug fixed.
+* version 0.3:open local picture and run page with it.Based on Filereader&dataURL.
+* version 
+
+#THINGS need to be finished.
+* word-cloud api:
+* split the mosaic.js as an independent part.
+* mobile-service adjust.
+* media query .
 
 
 # Reference
@@ -49,3 +54,4 @@ so,I want to first use rectangle and triangle shapes to test.And only use One wo
 * [CSS bulb]()
 * [濒临灭绝的动物](http://www.webhek.com/misc-res/species-in-pieces/#)
 * [Sound Manager]()
+* [Modal Window Effects](http://tympanus.net/codrops/2013/06/25/nifty-modal-window-effects/)

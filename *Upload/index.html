@@ -2,6 +2,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Drag your file to upload</title>
+    <link rel="stylesheet" href="./md.css" type="text/css">
     <link rel="stylesheet" href="./c.css" type="text/css" />
 </head>
 <body>
@@ -25,6 +26,21 @@
     
     <canvas id="cvs" height="300px" width="500px">You Browser Cannot support canvas</canvas>
     
+    <div class="md effect-1" id="md-1">
+        <div class="md-content">
+            <p>titilw</p>
+            <button class="md-upload">Upload</button>
+            <ul>
+                <li>A</li>
+                <li>B</li>
+                <li>C</li>
+                
+            </ul>
+            <button class="md-close">Close</button>
+            <button class="md-affirm">Affirm</button>
+        </div>
+    </div>
+    <div class="md-overlay"></div>
     
     <script type="text/javascript">
         var input = document.getElementById("input-t");
@@ -97,9 +113,8 @@
             var files = data.files;
             handle(files[0]);
         }
-        
-        
-        
+
     </script>
+    <script type="text/javascript" src="button.js"></script>    
 </body>
 </html>
