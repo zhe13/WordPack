@@ -1,0 +1,14 @@
+#input-t{
+    display:none;
+}
+
+.upload-hidden{
+    display:none;
+}
+
+.upload-show{
+    background:rgba(0,0,0,0.15);
+    position:fixed;
+    margin:auto;
+    top:0px;bottom:0px;left:0px;right:0px;
+}

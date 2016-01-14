@@ -1,23 +1,105 @@
-<!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
     <meta charset="UTF-8">
-    <title>Upload Your File</title>
+    <title>Drag your file to upload</title>
+    <link rel="stylesheet" href="./c.css" type="text/css" />
 </head>
 <body>
-    <input type="file" id="upload">
-    <!--to ensure muti files,add the mutiple attribute-->
-    <script>
-        var upload = document.getElementById("upload");
+    
+    <img src="" id="prv" height="100px"></img>
+    
+    <input type="button" value="QAQ" id="upload-btn"/>
+    <div id="upload-hidden" class="upload-hidden">
         
-        // upload.onchange = function(){
-        //     console.log("show file",file);
-        // }
-        upload.addEventListener("change",handleFiles,false);
-        function handleFiles(){
-            var file = this.files;
-            console.log("show file",file);
+        upload page
+        <div id="upload">
+            This is a Menu for upload
+            <input type="file" id="input-t"/>
+            
+            <div id="drag">
+                Here is Drag Box
+            </div>
+            
+        </div>
+    </div>
+    
+    <canvas id="cvs" height="300px" width="500px">You Browser Cannot support canvas</canvas>
+    
+    
+    <script type="text/javascript">
+        var input = document.getElementById("input-t");
+        input.addEventListener("change",function(e) {
+            var files = this.files;
+            handle(files[0]);
+        },false);
+        
+        
+        
+        function handle(f){
+            console.log(f);
+            var file_type =/^image\//;
+            if(!file_type.test(f.type)){
+                return;
+            }
+            var img = document.getElementById("prv");
+            
+            var reader = new FileReader();
+            reader.onload = (function(aImg){
+                return function(e){
+                    aImg.src = e.target.result;
+                    
+                    var pic = new Image();
+                    pic.src = e.target.result;
+                    var cvs = document.getElementById("cvs");
+                    var ctx = cvs.getContext("2d");
+                     cvs.width = pic.width;
+                     cvs.height = pic.height;
+                     
+                     ctx.drawImage(img,0,0);
+                };
+            })(img);
+            
+            reader.readAsDataURL(f);
         }
+        
+        
+        var btn = document.getElementById("upload-btn");
+        btn.addEventListener("click",function(e){
+            var upload_section = document.getElementById("upload-hidden")
+            upload_section.className = "upload-show";
+        },false);
+        
+        
+        
+        // drag&drop upload rect;
+        document.getElementById("upload").addEventListener("click",function(e){
+            input.click();
+            e.preventDefault();
+        });
+        var drag = document.getElementById("drag");
+        drag.addEventListener("dragenter",dragenter,false);
+        drag.addEventListener("dragover",dragover,false);
+        drag.addEventListener("drop",drop,false);
+        
+        function dragenter(e){
+            e.stopPropagation();
+            e.preventDefault();
+        }
+        function dragover(e){
+            e.stopPropagation();
+            e.preventDefault();
+        }
+        function drop(e){
+            e.stopPropagation();
+            e.preventDefault();
+            console.log("I received");
+            var data = e.dataTransfer;
+            var files = data.files;
+            handle(files[0]);
+        }
+        
+        
+        
     </script>
 </body>
 </html>
