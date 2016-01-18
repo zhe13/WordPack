@@ -343,6 +343,10 @@ function main(){
     var begin_scan = document.getElementById("begin_scan");
     var binarize   = document.getElementById("binarize");
     
+    // the true and pretend upload button 
+    var upload_btn = document.getElementById("upload");
+    var up_btn_origin = document.getElementById("upload-origin");
+    
     function updateSettings(){
         var scale_rate = document.getElementById("scale");
         var fill_word  = document.getElementById("fill_word");
@@ -378,6 +382,34 @@ function main(){
         }
     }
     
+    // -----------------Section of file reader--------------------
+    // 上传按钮 bindto the input of file.
+    upload_btn.addEventListener("click",function(e){
+        up_btn_origin.click();
+        e.preventDefault();
+    },false);
+    up_btn_origin.addEventListener("change",function(e){
+        var files = this.files;
+        handleFile(files[0]);
+    },false);
+    
+    function handleFile(file){
+        console.log(file);
+        var file_type = /^image\//;
+        if(!file_type.test(file.type)){
+            return;
+        }
+        var file_reader = new FileReader();
+        file_reader.onload = (function(aImg){
+            return function(e){
+                aImg.src = e.target.result;
+                // use dataURL to new an image.
+                GLOBAL.config.render_img =  e.target.result;
+            };
+        })(prev_img);
+        file_reader.readAsDataURL(file);
+        
+    }
 }
 
 main();
