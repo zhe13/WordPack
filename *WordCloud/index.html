@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>WordCloudPlayground</title>
+</head>
+<body>
+    <canvas id="canvas">
+        You Browser Doesn't Support Canvas
+    </canvas>
+    <script src="../js/wordcloud2.js"></script>
+    <script>
+        var state = WordCloud.isSupported;
+        if(!state){
+            console.log(state);
+        }
+        cvs = document.getElementById("canvas");
+        cvs.height = 600;
+        cvs.width  = 600;
+        
+        // var list = [["foo",22],["bar",16],["bar",16],["bar",16],["bar",16],["bar",16],["bar",16],["bar",16],["bar",16]];
+        var list = new Array();
+        for(var x=19;x<500;x++){
+            list.push(["foo",x%23]);
+        }
+        WordCloud(document.getElementById("canvas"),{
+            list:list,
+            fontFamily:"Arial",
+            fontWeight:700,
+            backgroundColor:"#4d4d4d",
+            shape:"circle"
+            });
+    </script>
+</body>
+</html>
